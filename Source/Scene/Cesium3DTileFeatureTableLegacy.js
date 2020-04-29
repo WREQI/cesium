@@ -5,7 +5,7 @@ import defined from "../Core/defined.js";
 /**
  * @private
  */
-function Cesium3DTileFeatureTable(featureTableJson, featureTableBinary) {
+function Cesium3DTileFeatureTableLegacy(featureTableJson, featureTableBinary) {
   this.json = featureTableJson;
   this.buffer = featureTableBinary;
   this._cachedTypedArrays = {};
@@ -44,7 +44,7 @@ function getTypedArrayFromArray(featureTable, semantic, componentType, array) {
   return typedArray;
 }
 
-Cesium3DTileFeatureTable.prototype.getGlobalProperty = function (
+Cesium3DTileFeatureTableLegacy.prototype.getGlobalProperty = function (
   semantic,
   componentType,
   componentLength
@@ -70,7 +70,7 @@ Cesium3DTileFeatureTable.prototype.getGlobalProperty = function (
   return jsonValue;
 };
 
-Cesium3DTileFeatureTable.prototype.getPropertyArray = function (
+Cesium3DTileFeatureTableLegacy.prototype.getPropertyArray = function (
   semantic,
   componentType,
   componentLength
@@ -97,7 +97,7 @@ Cesium3DTileFeatureTable.prototype.getPropertyArray = function (
   return getTypedArrayFromArray(this, semantic, componentType, jsonValue);
 };
 
-Cesium3DTileFeatureTable.prototype.getProperty = function (
+Cesium3DTileFeatureTableLegacy.prototype.getProperty = function (
   semantic,
   componentType,
   componentLength,
@@ -125,4 +125,4 @@ Cesium3DTileFeatureTable.prototype.getProperty = function (
 
   return result;
 };
-export default Cesium3DTileFeatureTable;
+export default Cesium3DTileFeatureTableLegacy;

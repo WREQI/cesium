@@ -12,7 +12,7 @@ import Rectangle from "../Core/Rectangle.js";
 import RuntimeError from "../Core/RuntimeError.js";
 import when from "../ThirdParty/when.js";
 import Cesium3DTileBatchTable from "./Cesium3DTileBatchTable.js";
-import Cesium3DTileFeatureTable from "./Cesium3DTileFeatureTable.js";
+import Cesium3DTileFeatureTableLegacy from "./Cesium3DTileFeatureTableLegacy.js";
 import Vector3DTilePoints from "./Vector3DTilePoints.js";
 import Vector3DTilePolygons from "./Vector3DTilePolygons.js";
 import Vector3DTilePolylines from "./Vector3DTilePolylines.js";
@@ -359,7 +359,7 @@ function initialize(content, arrayBuffer, byteOffset) {
     return;
   }
 
-  var featureTable = new Cesium3DTileFeatureTable(
+  var featureTable = new Cesium3DTileFeatureTableLegacy(
     featureTableJson,
     featureTableBinary
   );

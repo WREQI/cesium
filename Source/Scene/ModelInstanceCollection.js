@@ -732,11 +732,11 @@ function createModel(collection, context) {
       },
     };
 
-    // When using a batch table, add a batch id attribute
+    // When using a batch table, add a feature id attribute
     if (usesBatchTable) {
-      instancedAttributes.a_batchId = {
+      instancedAttributes.a_featureId = {
         index: 0, // updated in Model
-        vertexBuffer: collection._batchIdBuffer,
+        vertexBuffer: collection._featureIdBuffer,
         componentsPerAttribute: 1,
         componentDatatype: ComponentDatatype.UNSIGNED_SHORT,
         normalize: false,

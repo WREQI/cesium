@@ -526,7 +526,7 @@ function Model(options) {
   this._distanceDisplayCondition = options.distanceDisplayCondition;
 
   // Undocumented options
-  this._addBatchIdToGeneratedShaders = options.addBatchIdToGeneratedShaders;
+  this._addFeatureIdToGeneratedShaders = options.addFeatureIdToGeneratedShaders;
   this._precreatedAttributes = options.precreatedAttributes;
   this._vertexShaderLoaded = options.vertexShaderLoaded;
   this._fragmentShaderLoaded = options.fragmentShaderLoaded;
@@ -5204,7 +5204,8 @@ Model.prototype.update = function (frameState) {
           addDefaults(gltf);
 
           var options = {
-            addBatchIdToGeneratedShaders: this._addBatchIdToGeneratedShaders,
+            addFeatureIdToGeneratedShaders: this
+              ._addFeatureIdToGeneratedShaders,
           };
 
           processModelMaterialsCommon(gltf, options);

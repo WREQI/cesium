@@ -14,7 +14,7 @@ import Pass from "../Renderer/Pass.js";
 import Axis from "./Axis.js";
 import Cesium3DTileBatchTable from "./Cesium3DTileBatchTable.js";
 import Cesium3DTileFeature from "./Cesium3DTileFeature.js";
-import Cesium3DTileFeatureTable from "./Cesium3DTileFeatureTable.js";
+import Cesium3DTileFeatureTableLegacy from "./Cesium3DTileFeatureTableLegacy.js";
 import ClassificationModel from "./ClassificationModel.js";
 import Model from "./Model.js";
 import ModelUtility from "./ModelUtility.js";
@@ -47,7 +47,7 @@ function Batched3DModel3DTileContent(
   this._features = undefined;
 
   // Populate from gltf when available
-  this._batchIdAttributeName = undefined;
+  this._featureIdAttributeName = undefined;
   this._diffuseAttributeOrUniformName = {};
 
   this._rtcCenterTransform = undefined;
@@ -137,24 +137,8 @@ Object.defineProperties(Batched3DModel3DTileContent.prototype, {
 
 var sizeOfUint32 = Uint32Array.BYTES_PER_ELEMENT;
 
-function getBatchIdAttributeName(gltf) {
-  var batchIdAttributeName = ModelUtility.getAttributeOrUniformBySemantic(
-    gltf,
-    "_BATCHID"
-  );
-  if (!defined(batchIdAttributeName)) {
-    batchIdAttributeName = ModelUtility.getAttributeOrUniformBySemantic(
-      gltf,
-      "BATCHID"
-    );
-    if (defined(batchIdAttributeName)) {
-      Batched3DModel3DTileContent._deprecationWarning(
-        "b3dm-legacy-batchid",
-        "The glTF in this b3dm uses the semantic `BATCHID`. Application-specific semantics should be prefixed with an underscore: `_BATCHID`."
-      );
-    }
-  }
-  return batchIdAttributeName;
+function getFeatureIdAttributeName(gltf) {
+  return ModelUtility.getAttributeOrUniformBySemantic(gltf, "_FEATURE_ID_0");
 }
 
 function getVertexShaderCallback(content) {
@@ -164,7 +148,7 @@ function getVertexShaderCallback(content) {
 
     var gltf = content._model.gltf;
     if (defined(gltf)) {
-      content._batchIdAttributeName = getBatchIdAttributeName(gltf);
+      content._featureIdAttributeName = getFeatureIdAttributeName(gltf);
       content._diffuseAttributeOrUniformName[
         programId
       ] = ModelUtility.getDiffuseAttributeOrUniform(gltf, programId);
@@ -172,7 +156,7 @@ function getVertexShaderCallback(content) {
 
     var callback = batchTable.getVertexShaderCallback(
       handleTranslucent,
-      content._batchIdAttributeName,
+      content._featureIdAttributeName,
       content._diffuseAttributeOrUniformName[programId]
     );
     return defined(callback) ? callback(vs) : vs;
@@ -213,8 +197,8 @@ function getClassificationFragmentShaderCallback(content) {
 }
 
 function createColorChangedCallback(content) {
-  return function (batchId, color) {
-    content._model.updateCommands(batchId, color);
+  return function (featureId, color) {
+    content._model.updateCommands(featureId, color);
   };
 }
 
@@ -311,7 +295,7 @@ function initialize(content, arrayBuffer, byteOffset) {
   );
   byteOffset += featureTableBinaryByteLength;
 
-  var featureTable = new Cesium3DTileFeatureTable(
+  var featureTable = new Cesium3DTileFeatureTableLegacy(
     featureTableJson,
     featureTableBinary
   );
@@ -424,7 +408,7 @@ function initialize(content, arrayBuffer, byteOffset) {
       fragmentShaderLoaded: getFragmentShaderCallback(content),
       uniformMapLoaded: batchTable.getUniformMapCallback(),
       pickIdLoaded: getPickIdCallback(content),
-      addBatchIdToGeneratedShaders: batchLength > 0, // If the batch table has values in it, generated shaders will need a batchId attribute
+      addFeatureIdToGeneratedShaders: batchLength > 0, // If the batch table has values in it, generated shaders will need a featureId attribute
       pickObject: pickObject,
       imageBasedLightingFactor: tileset.imageBasedLightingFactor,
       lightColor: tileset.lightColor,

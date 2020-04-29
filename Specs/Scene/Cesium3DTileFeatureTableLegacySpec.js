@@ -1,9 +1,9 @@
 import { ComponentDatatype } from "../../Source/Cesium.js";
-import { Cesium3DTileFeatureTable } from "../../Source/Cesium.js";
+import { Cesium3DTileFeatureTableLegacy } from "../../Source/Cesium.js";
 
-describe("Scene/Cesium3DTileFeatureTable", function () {
+describe("Scene/Cesium3DTileFeatureTableLegacy", function () {
   it("loads from JSON", function () {
-    var featureTable = new Cesium3DTileFeatureTable({
+    var featureTable = new Cesium3DTileFeatureTableLegacy({
       TEST: [0, 1, 2, 3, 4, 5],
     });
     featureTable.featuresLength = 3;
@@ -29,7 +29,7 @@ describe("Scene/Cesium3DTileFeatureTable", function () {
   });
 
   it("loads from binary", function () {
-    var featureTable = new Cesium3DTileFeatureTable(
+    var featureTable = new Cesium3DTileFeatureTableLegacy(
       {
         TEST: {
           byteOffset: 4,

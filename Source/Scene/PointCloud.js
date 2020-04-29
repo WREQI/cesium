@@ -27,7 +27,7 @@ import VertexArray from "../Renderer/VertexArray.js";
 import when from "../ThirdParty/when.js";
 import BlendingState from "./BlendingState.js";
 import Cesium3DTileBatchTable from "./Cesium3DTileBatchTable.js";
-import Cesium3DTileFeatureTable from "./Cesium3DTileFeatureTable.js";
+import Cesium3DTileFeatureTableLegacy from "./Cesium3DTileFeatureTableLegacy.js";
 import DracoLoader from "./DracoLoader.js";
 import getClipAndStyleCode from "./getClipAndStyleCode.js";
 import getClippingFunction from "./getClippingFunction.js";
@@ -273,7 +273,7 @@ function initialize(pointCloud, options) {
     }
   }
 
-  var featureTable = new Cesium3DTileFeatureTable(
+  var featureTable = new Cesium3DTileFeatureTableLegacy(
     featureTableJson,
     featureTableBinary
   );

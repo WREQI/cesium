@@ -1455,7 +1455,7 @@ Object.defineProperties(Cesium3DTileset.prototype, {
    * When enabled for batched 3D model tilesets, there are a few requirements/limitations on the glTF:
    * <ul>
    *     <li>POSITION and _BATCHID semantics are required.</li>
-   *     <li>All indices with the same batch id must occupy contiguous sections of the index buffer.</li>
+   *     <li>All indices with the same feature id must occupy contiguous sections of the index buffer.</li>
    *     <li>All shaders and techniques are ignored. The generated shader simply multiplies the position by the model-view-projection matrix.</li>
    *     <li>The only supported extensions are CESIUM_RTC and WEB3D_quantized_attributes.</li>
    *     <li>Only one node is supported.</li>
@@ -1649,8 +1649,14 @@ Cesium3DTileset.prototype.loadTileset = function (
   if (!defined(asset)) {
     throw new RuntimeError("Tileset must have an asset property.");
   }
-  if (asset.version !== "0.0" && asset.version !== "1.0") {
-    throw new RuntimeError("The tileset must be 3D Tiles version 0.0 or 1.0.");
+  if (
+    asset.version !== "0.0" &&
+    asset.version !== "1.0" &&
+    asset.version !== "2.0.0-alpha.0"
+  ) {
+    throw new RuntimeError(
+      "The tileset must be 3D Tiles version 0.0, 1.0, or 2.0.0-alpha.0"
+    );
   }
 
   var statistics = this._statistics;

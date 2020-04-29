@@ -324,9 +324,9 @@ describe(
       });
     });
 
-    it("throws with batch id semantic", function () {
+    it("throws with feature id semantic", function () {
       return loadGltf(batchedModel).then(function (gltf) {
-        gltf.meshes[0].primitives[0].attributes._BATCHID = undefined;
+        gltf.meshes[0].primitives[0].attributes._FEATURE_ID_0 = undefined;
         expect(function () {
           return new ClassificationModel({
             gltf: gltf,

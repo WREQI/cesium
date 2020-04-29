@@ -20,7 +20,7 @@ import Pass from "../Renderer/Pass.js";
 import Axis from "./Axis.js";
 import Cesium3DTileBatchTable from "./Cesium3DTileBatchTable.js";
 import Cesium3DTileFeature from "./Cesium3DTileFeature.js";
-import Cesium3DTileFeatureTable from "./Cesium3DTileFeatureTable.js";
+import Cesium3DTileFeatureTableLegacy from "./Cesium3DTileFeatureTableLegacy.js";
 import ModelInstanceCollection from "./ModelInstanceCollection.js";
 
 /**
@@ -217,7 +217,7 @@ function initialize(content, arrayBuffer, byteOffset) {
   );
   byteOffset += featureTableBinaryByteLength;
 
-  var featureTable = new Cesium3DTileFeatureTable(
+  var featureTable = new Cesium3DTileFeatureTableLegacy(
     featureTableJson,
     featureTableBinary
   );

@@ -61,7 +61,7 @@ var ModelState = ModelUtility.ModelState;
  * @exception {RuntimeError} Only one mesh is supported when using b3dm for classification.
  * @exception {RuntimeError} Only one primitive per mesh is supported when using b3dm for classification.
  * @exception {RuntimeError} The mesh must have a position attribute.
- * @exception {RuntimeError} The mesh must have a batch id attribute.
+ * @exception {RuntimeError} The mesh must have a feature id attribute.
  */
 function ClassificationModel(options) {
   options = defaultValue(options, defaultValue.EMPTY_OBJECT);
@@ -119,9 +119,9 @@ function ClassificationModel(options) {
     throw new RuntimeError("The mesh must have a position attribute.");
   }
 
-  var gltfBatchIdAttribute = gltfPrimitives[0].attributes._BATCHID;
-  if (!defined(gltfBatchIdAttribute)) {
-    throw new RuntimeError("The mesh must have a batch id attribute.");
+  var gltfFeatureIdAttribute = gltfPrimitives[0].attributes._FEATURE_ID_0;
+  if (!defined(gltfFeatureIdAttribute)) {
+    throw new RuntimeError("The mesh must have a feature id attribute.");
   }
 
   this._gltf = gltf;
